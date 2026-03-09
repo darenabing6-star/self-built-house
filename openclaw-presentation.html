@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw - 智能自动化助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* 封面 */
+        .cover {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .cover h1 {
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #e94560, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .cover .subtitle {
+            font-size: 24px;
+            color: #a0a0a0;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .version {
+            margin-top: 40px;
+            padding: 10px 30px;
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid #e94560;
+            border-radius: 30px;
+            color: #e94560;
+            font-size: 14px;
+        }
+        
+        /* 内容页通用 */
+        .content-slide {
+            background: #0f0f15;
+        }
+        
+        .content-slide h2 {
+            font-size: 48px;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(90deg, #fff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .card {
+            background: linear-gradient(145deg, #1a1a24, #12121a);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #e94560;
+            box-shadow: 0 20px 40px rgba(233, 69, 96, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .card p {
+            color: #888;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        /* 特性页 */
+        .features {
+            background: linear-gradient(180deg, #0f0f15 0%, #1a1a2e 100%);
+        }
+        
+        .feature-list {
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 30px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border-left: 4px solid #e94560;
+        }
+        
+        .feature-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e94560;
+            min-width: 50px;
+        }
+        
+        .feature-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-content p {
+            color: #888;
+            line-height: 1.6;
+        }
+        
+        /* 架构页 */
+        .architecture {
+            background: #0a0a0f;
+        }
+        
+        .arch-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+        }
+        
+        .arch-box {
+            background: linear-gradient(145deg, #1e3a5f, #0f3460);
+            padding: 30px 50px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .arch-box h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .arch-box p {
+            font-size: 14px;
+            color: #a0c4ff;
+        }
+        
+        .arch-arrow {
+            font-size: 40px;
+            color: #e94560;
+        }
+        
+        /* 使用场景 */
+        .scenarios {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f15 100%);
+        }
+        
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+        }
+        
+        .scenario-card {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .scenario-card .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .scenario-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .scenario-card p {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* 支持的平台 */
+        .platforms {
+            background: #0f0f15;
+        }
+        
+        .platform-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+        }
+        
+        .platform-tag {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .platform-tag:hover {
+            background: #e94560;
+            border-color: #e94560;
+            transform: scale(1.05);
+        }
+        
+        /* 结尾页 */
+        .ending {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 50%, #0a0a0f 100%);
+            text-align: center;
+        }
+        
+        .ending h2 {
+            font-size: 56px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .ending .cta {
+            font-size: 24px;
+            color: #a0a0a0;
+            margin-bottom: 60px;
+        }
+        
+        .links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .link-btn {
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .link-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(233, 69, 96, 0.3);
+        }
+        
+        .footer {
+            margin-top: 80px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 页码 */
+        .page-num {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* 导航点 */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-dot.active {
+            background: #e94560;
+            transform: scale(1.3);
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .cover h1 { font-size: 40px; }
+            .content-slide h2 { font-size: 32px; }
+            .cards { grid-template-columns: 1fr; }
+            .scenario-grid { grid-template-columns: 1fr; }
+            .arch-diagram { flex-direction: column; }
+            .arch-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航点 -->
+    <div class="nav-dots">
+        <div class="nav-dot active" onclick="scrollToSlide(0)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(1)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(3)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(5)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(6)"></div>
+    </div>
+
+    <!-- 第1页：封面 -->
+    <section class="slide cover" id="slide-0">
+        <div class="logo">🦞</div>
+        <h1>OpenClaw</h1>
+        <p class="subtitle">你的智能自动化助手<br>让重复性工作自动化，让复杂任务简单化</p>
+        <div class="version">Version 2026.3.7</div>
+        <div class="page-num">1 / 7</div>
+    </section>
+
+    <!-- 第2页：什么是 OpenClaw -->
+    <section class="slide content-slide" id="slide-1">
+        <h2>什么是 OpenClaw？</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>AI 驱动</h3>
+                <p>基于大语言模型的智能助手，理解自然语言指令，执行复杂任务</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔧</div>
+                <h3>自动化工具</h3>
+                <p>连接各种工具和服务，自动完成文件处理、数据分析、代码编写等工作</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <h3>多平台接入</h3>
+                <p>支持 Telegram、飞书、Discord 等多个聊天平台，随时随地使用</p>
+            </div>
+        </div>
+        <div class="page-num">2 / 7</div>
+    </section>
+
+    <!-- 第3页：核心特性 -->
+    <section class="slide features" id="slide-2">
+        <h2>核心特性</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-number">01</div>
+                <div class="feature-content">
+                    <h3>技能系统（Skills）</h3>
+                    <p>模块化设计，按需加载各种能力。GitHub 管理、天气查询、笔记记录、音乐控制... 超过 50 种技能</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number">02</div>
+                <div class="feature-content">
+                    <h3>多通道支持</h3>
+                    <p>一个后台，多个前端。同时在 Telegram、飞书、Discord 等平台响应消息</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number">03</div>
+                <div class="feature-content">
+                    <h3>安全隔离</h3>
+                    <p>每个任务在独立环境中运行，支持审批机制，危险操作需要确认</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number">04</div>
+                <div class="feature-content">
+                    <h3>记忆系统</h3>
+                    <p>长期记忆 + 短期上下文，记住你的偏好、项目信息、历史对话</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-num">3 / 7</div>
+    </section>
+
+    <!-- 第4页：架构 -->
+    <section class="slide architecture" id="slide-3">
+        <h2>系统架构</h2>
+        <div class="arch-diagram">
+            <div class="arch-box">
+                <h4>🌐 Gateway</h4>
+                <p>WebSocket 网关<br>消息路由中心</p>
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">
+                <h4>🧠 Agent</h4>
+                <p>AI 智能体<br>任务执行引擎</p>
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-box">
+                <h4>🔌 Skills</h4>
+                <p>技能插件<br>工具集成</p>
+            </div>
+        </div>
+        <div style="margin-top: 60px; max-width: 800px; text-align: center;">
+            <p style="color: #888; line-height: 1.8; font-size: 18px;">
+                <strong style="color: #fff;">Gateway</strong> 接收来自各平台的消息<br>
+                <strong style="color: #fff;">Agent</strong> 理解意图并规划任务<br>
+                <strong style="color: #fff;">Skills</strong> 执行具体操作并返回结果
+            </p>
+        </div>
+        <div class="page-num">4 / 7</div>
+    </section>
+
+    <!-- 第5页：使用场景 -->
+    <section class="slide scenarios" id="slide-4">
+        <h2>使用场景</h2>
+        <div class="scenario-grid">
+            <div class="scenario-card">
+                <div class="emoji">💻</div>
+                <h3>开发辅助</h3>
+                <p>代码审查、GitHub 管理、自动化部署、技术文档查询</p>
+            </div>
+            <div class="scenario-card">
+                <div class="emoji">📊</div>
+                <h3>数据分析</h3>
+                <p>文件处理、数据可视化、报表生成、信息整理</p>
+            </div>
+            <div class="scenario-card">
+                <div class="emoji">🏠</div>
+                <h3>生活助手</h3>
+                <p>天气查询、笔记记录、待办管理、音乐控制</p>
+            </div>
+            <div class="scenario-card">
+                <div class="emoji">🔒</div>
+                <h3>系统管理</h3>
+                <p>服务器监控、安全检查、定时任务、日志分析</p>
+            </div>
+        </div>
+        <div class="page-num">5 / 7</div>
+    </section>
+
+    <!-- 第6页：支持的平台 -->
+    <section class="slide platforms" id="slide-5">
+        <h2>支持的平台</h2>
+        <div class="platform-grid">
+            <div class="platform-tag">📱 Telegram</div>
+            <div class="platform-tag">💼 飞书</div>
+            <div class="platform-tag">🎮 Discord</div>
+            <div class="platform-tag">💬 Slack</div>
+            <div class="platform-tag">📞 WhatsApp</div>
+            <div class="platform-tag">📧 iMessage</div>
+            <div class="platform-tag">🌐 Line</div>
+            <div class="platform-tag">🔵 Signal</div>
+            <div class="platform-tag">🟣 Matrix</div>
+            <div class="platform-tag">🟢 Google Chat</div>
+            <div class="platform-tag">🟠 Microsoft Teams</div>
+            <div class="platform-tag">⚫ IRC</div>
+        </div>
+        <p style="margin-top: 50px; color: #666; text-align: center;">
+            还有更多平台持续添加中...
+        </p>
+        <div class="page-num">6 / 7</div>
+    </section>
+
+    <!-- 第7页：结尾 -->
+    <section class="slide ending" id="slide-6">
+        <h2>开始体验 OpenClaw</h2>
+        <p class="cta">让 AI 成为你的得力助手</p>
+        <div class="links">
+            <a href="https://docs.openclaw.ai" class="link-btn" target="_blank">📖 官方文档</a>
+            <a href="https://github.com/openclaw/openclaw" class="link-btn" target="_blank">⭐ GitHub</a>
+            <a href="https://discord.com/invite/clawd" class="link-btn" target="_blank">💬 加入社区</a>
+        </div>
+        <div class="footer">
+            <p>OpenClaw - 2026.3.7</p>
+            <p style="margin-top: 10px;">If it's repetitive, I'll automate it; if it's hard, I'll bring jokes and a rollback plan.</p>
+        </div>
+        <div class="page-num">7 / 7</div>
+    </section>
+
+    <script>
+        // 滚动监听更新导航点
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        slides.forEach(slide => observer.observe(slide));
+        
+        // 点击导航点滚动
+        function scrollToSlide(index) {
+            document.getElementById(`slide-${index}`).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            const currentSlide = Array.from(slides).findIndex(slide => {
+                const rect = slide.getBoundingClientRect();
+                return rect.top >= -100 && rect.top <= 100;
+            });
+            
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    scrollToSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    scrollToSlide(currentSlide - 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
