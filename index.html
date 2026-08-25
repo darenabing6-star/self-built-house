@@ -119,7 +119,7 @@
 
   /* SAFETY */
   .safety{background:var(--bg)}
-  .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
   .scard{border:1px solid var(--line);border-radius:6px;padding:28px;background:#fff;position:relative;overflow:hidden}
   .scard:before{content:"";position:absolute;top:0;left:0;height:3px;width:44px;background:var(--gold)}
   .scard .big{font-family:'Songti SC','STSong',serif;font-size:22px;font-weight:700;color:var(--dark)}
@@ -155,13 +155,42 @@
     section{padding:64px 0}
   }
   @media(max-width:560px){
-    .ggrid{grid-template-columns:1fr}
-    .sgrid,.hl,.rooms{grid-template-columns:1fr}
-    .stats .grid{grid-template-columns:repeat(2,1fr)}
-    .istage{height:58vh}
-    .fp{padding:26px 20px}
-    .wrap{padding:0 18px}
-    .hero h1{letter-spacing:.02em}
+    body{font-size:16px}
+    .wrap{padding:0 16px}
+    section{padding:50px 0}
+    .head{margin-bottom:42px}
+    h2{font-size:30px}
+    .sub{font-size:14px;margin-top:12px}
+    .kicker{font-size:11px;letter-spacing:.24em}
+    .hero{min-height:auto;padding:96px 0 78px}
+    .hero p{font-size:15px}
+    .hero .meta{margin-top:30px;gap:10px}
+    .hero .meta span{padding:8px 14px;font-size:13px}
+    .stats{padding:46px 0}
+    .stats .grid{grid-template-columns:repeat(2,1fr);gap:20px 4px}
+    .stat .n{font-size:34px}
+    .stat .l{font-size:12px}
+    .ggrid{grid-template-columns:1fr;gap:6px}
+    .shot .cap{padding:20px 16px 10px;font-size:12px}
+    .design .cols{gap:22px}
+    .design .figure:before{inset:10px -8px -10px 10px}
+    .istage{height:52vh;min-height:360px}
+    .iarrow{width:36px;height:36px;font-size:22px}
+    .izoom button{width:34px;height:34px;font-size:15px}
+    .icap{font-size:12px;padding:6px 12px}
+    .tabs{gap:8px;margin-bottom:22px}
+    .tab{padding:9px 16px;font-size:14px}
+    .fp{padding:22px 16px}
+    .fp h3{font-size:21px}
+    .fp .lv{font-size:13px;margin-bottom:18px}
+    .room{padding:16px}
+    .sgrid,.hl,.rooms{grid-template-columns:1fr;gap:14px}
+    .hl .card,.scard{padding:20px}
+    .table .row .k{font-size:14px}
+    .table .row .v{font-size:14px}
+    footer{padding:48px 0}
+    footer .ft{font-size:22px}
+    footer .slogan{font-size:14px;letter-spacing:.16em}
   }
 </style>
 </head>
@@ -202,8 +231,7 @@
       <div class="row"><div class="k">占地面积</div><div class="v">约 148㎡</div></div>
       <div class="row"><div class="k">总建筑面积</div><div class="v">约 600㎡</div></div>
       <div class="row"><div class="k">结构形式</div><div class="v">钢筋混凝土框架结构</div></div>
-      <div class="row"><div class="k">抗震设防</div><div class="v">框架三级抗震</div></div>
-      <div class="row"><div class="k">材料等级</div><div class="v">柱 C30 混凝土 · 主筋 HRB400</div></div>
+      <div class="row"><div class="k">材料等级</div><div class="v">柱 C40 混凝土 · 主筋 HRB400</div></div>
       <div class="row"><div class="k">设计依据</div><div class="v">《建筑抗震设计规范》GB50011-2010 · 平法图集 22G101-1</div></div>
     </div>
   </div>
@@ -313,9 +341,8 @@
       <div class="orn"><span class="l"></span>◆<span class="r"></span></div>
     </div>
     <div class="sgrid">
-      <div class="scard"><div class="big">钢筋混凝土框架</div><div class="s">整体性好、抗震性能佳，内隔墙可灵活改造，空间弹性大</div></div>
-      <div class="scard"><div class="big">框架三级抗震</div><div class="s">符合相应设防要求，结构安全可靠</div></div>
-      <div class="scard"><div class="big">C30 混凝土 · HRB400</div><div class="s">柱 C30 混凝土，主筋 HRB400，用料扎实</div></div>
+      <div class="scard"><div class="big">钢筋混凝土框架</div><div class="s">整体性好，内隔墙可灵活改造，空间弹性大</div></div>
+      <div class="scard"><div class="big">C40 混凝土 · HRB400</div><div class="s">柱 C40 混凝土，主筋 HRB400，用料扎实</div></div>
       <div class="scard"><div class="big">GB50011-2010</div><div class="s">按现行《建筑抗震设计规范》与平法图集执行</div></div>
       <div class="scard"><div class="big">框架结构弹性</div><div class="s">承重墙少，内部空间可灵活划分，满足多种家庭需求</div></div>
     </div>
