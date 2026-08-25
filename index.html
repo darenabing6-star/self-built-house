@@ -14,18 +14,18 @@
     --bg:#fdfcf9; --dark:#12100c;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:'PingFang SC','Microsoft YaHei','Heiti SC',-apple-system,'Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth;background:var(--dark)}
+  body{font-family:'PingFang SC','Microsoft YaHei','Heiti SC',-apple-system,'Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   img{max-width:100%;display:block;user-select:none;-webkit-user-drag:none}
   .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
-  section{padding:84px 0}
+  section{padding:60px 0}
   .serif{font-family:'Songti SC','STSong','Noto Serif SC',serif}
 
   .kicker{display:inline-flex;align-items:center;gap:10px;letter-spacing:.3em;color:var(--gold);font-size:11px;font-weight:700;margin-bottom:12px;text-transform:uppercase}
   .kicker:before{content:"";width:28px;height:1px;background:var(--gold2)}
   h2{font-family:'Songti SC','STSong',serif;font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--dark);letter-spacing:.03em;line-height:1.28}
   .sub{color:var(--muted);margin-top:12px;max-width:620px}
-  .head{margin-bottom:48px}
+  .head{margin-bottom:32px}
   .head.c{text-align:center}
   .head.c .sub{margin-inline:auto}
   .orn{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;color:var(--gold)}
@@ -67,12 +67,12 @@
   .row{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line)}
   .row:last-child{border-bottom:none}
   .row:nth-child(odd){background:#fbf8f2}
-  .row .k{padding:15px 18px;color:var(--soft);font-weight:600;font-size:14px;border-right:1px solid var(--line);display:flex;align-items:center}
-  .row .v{padding:15px 18px;font-weight:700;color:var(--dark);font-size:15px;display:flex;align-items:center}
+  .row .k{padding:10px 16px;color:var(--soft);font-weight:600;font-size:13px;border-right:1px solid var(--line);display:flex;align-items:center}
+  .row .v{padding:10px 16px;font-weight:700;color:var(--dark);font-size:14px;display:flex;align-items:center}
 
   /* DESIGN */
   .design{background:var(--cream)}
-  .design .cols{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .design .cols{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
   .design h3{font-family:'Songti SC',serif;font-size:24px;color:var(--dark);margin-bottom:16px}
   .design p{color:var(--soft)}
   .design ul{list-style:none;margin-top:18px}
@@ -161,7 +161,7 @@
   #lb .close{position:absolute;top:18px;right:24px;color:var(--gold2);font-size:38px;cursor:pointer;line-height:1}
 
   /* sticky bottom CTA */
-  .cta{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;background:rgba(18,16,12,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(216,184,120,.3);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+  .cta{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;background:#17140f;border-top:1px solid rgba(216,184,120,.3);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
   .cta .in{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .cta .label{color:#f3e9d5;font-size:13px;line-height:1.3}
   .cta .label b{display:block;font-family:'Songti SC',serif;font-size:15px;color:var(--gold2)}
@@ -184,7 +184,7 @@
     .row .k{border-right:none;border-bottom:none;padding:0;font-size:12px;color:var(--gold);background:transparent}
     .row .v{padding:4px 0 0;font-size:15px}
     .cta{display:block}
-    body{padding-bottom:64px}
+    footer{padding-bottom:96px}
   }
   @media(max-width:560px){
     body{font-size:16px}
@@ -267,11 +267,8 @@
     <div class="table">
       <div class="row"><div class="k">建筑类型</div><div class="v">四层独栋 · 钢筋混凝土框架</div></div>
       <div class="row"><div class="k">建筑尺寸</div><div class="v">约 12.7m × 11.7m</div></div>
-      <div class="row"><div class="k">占地面积</div><div class="v">约 148㎡</div></div>
-      <div class="row"><div class="k">总建筑面积</div><div class="v">约 600㎡</div></div>
-      <div class="row"><div class="k">结构形式</div><div class="v">钢筋混凝土框架结构</div></div>
+      <div class="row"><div class="k">占地 / 建面</div><div class="v">约 148㎡ 占地 · 约 600㎡ 建面</div></div>
       <div class="row"><div class="k">材料等级</div><div class="v">柱 C40 混凝土 · 主筋 HRB400</div></div>
-      <div class="row"><div class="k">设计依据</div><div class="v">《建筑抗震设计规范》GB50011-2010 · 22G101-1</div></div>
     </div>
   </div>
 </section>
@@ -286,13 +283,11 @@
     <div class="cols">
       <div>
         <h3>有温度、有层次的现代宅邸</h3>
-        <p>为<b>三代同堂家庭</b>定制，现代简约，强调体块干净、大面宽采光与私密分层动线。</p>
-        <p style="margin-top:12px">一层公共社交＋长辈起居，二三层核心居住，四层退台成露台——「动静分离、代际分层」。</p>
+        <p>为<b>三代同堂</b>定制，现代简约、大面宽采光，四层功能分层，动静分离。</p>
         <ul>
-          <li>大面宽、浅进深，采光通风极佳</li>
-          <li>黑白灰配红砖，现代克制有记忆点</li>
-          <li>红砖通高装饰柱，立面视觉焦点</li>
-          <li>南向通透，日照充足</li>
+          <li>大面宽浅进深，采光极佳</li>
+          <li>黑白灰配红砖，克制有记忆点</li>
+          <li>红砖通高柱，立面视觉焦点</li>
         </ul>
         <div class="palette">
           <div class="pchip" style="--c:#f5f5f5;color:#8d8272">白</div>
